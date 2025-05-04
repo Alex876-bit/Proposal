@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For You ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #ff0000 0%, #000000 50%, #ff69b4 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+            transform: scale(0.9);
+            animation: cardEntrance 0.8s ease-out forwards;
+            border: 2px solid #ff1493;
+        }
+        @keyframes cardEntrance {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        h1 {
+            color: #ff1493;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        p {
+            color: #333;
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        .verse {
+            font-style: italic;
+            color: #555;
+            margin: 25px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            background: rgba(255, 20, 147, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid #ff1493;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+        button {
+            background: #ff1493;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            background: #ff0066;
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+            z-index: 0;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(20deg); }
+        }
+        /* Signature */
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            color: #ff1493;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts -->
+    <div id="hearts-container"></div>
+
+    <!-- Main Card -->
+    <div class="card">
+        <h1>My Dearest [Her Name] 💖</h1>
+        <p>Every moment with you is a gift I cherish...</p>
+        <p>Will you make me the happiest person and be my girlfriend?</p>
+        
+        <div class="buttons">
+            <button onclick="startConfetti()">YES! 💘</button>
+            <button onclick="startConfetti()">ALSO YES! 😍</button>
+        </div>
+
+        <div class="verse">
+            "Two are better than one,<br>
+            because they have a good return for their labor:<br>
+            If either of them falls down,<br>
+            one can help the other up.<br>
+            But pity anyone who falls<br>
+            and has no one to help them up.<br>
+            Also, if two lie down together, they will keep warm.<br>
+            But how can one keep warm alone?<br>
+            Though one may be overpowered,<br>
+            two can defend themselves.<br>
+            A cord of three strands is not quickly broken."<br>
+            <strong>— Ecclesiastes 4:9-12</strong>
+        </div>
+        
+        <div class="signature">Forever yours,<br>[Your Name]</div>
+    </div>
+
+    <!-- Hidden YouTube music (will autoplay when page loads) -->
+    <iframe id="music" width="0" height="0" src="https://www.youtube.com/embed/2ULA7xBICKA?autoplay=1&mute=0&loop=1" frameborder="0" allow="autoplay" style="display:none;"></iframe>
+
+    <!-- Confetti script -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const colors = ['#ff1493', '#ff69b4', '#ff0000'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Confetti blast with different effects for each button
+        function startConfetti() {
+            // Bigger confetti explosion
+            confetti({
+                particleCount: 300,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#ff1493', '#ff0000', '#ffffff'],
+                shapes: ['circle', 'square', 'heart']
+            });
+            
+            // Additional heart-shaped confetti
+            confetti({
+                particleCount: 50,
+                spread: 70,
+                origin: { y: 0.5 },
+                shapes: ['heart'],
+                scalar: 1.5,
+                colors: ['#ff1493']
+            });
+            
+            // Auto-close after selection (if you want to add this later)
+            // setTimeout(() => { /* your close function */ }, 2000);
+        }
+
+        // Initialize everything when page loads
+        window.onload = function() {
+            createHearts();
+            
+            // Auto-confetti after 4 seconds to grab attention
+            setTimeout(startConfetti, 4000);
+            
+            // Try to unmute music (may not work in all browsers)
+            try {
+                document.getElementById('music').muted = false;
+            } catch(e) {}
+        };
+    </script>
+</body>
+</html>
